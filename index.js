@@ -43,14 +43,55 @@ function sortAll() {
 // ------------ COMPONENTS --------------
 
 function NumberForm() {
-    // need to create the form tag/element
+  // need to create the form tag/element
   const $form = document.createElement("form");
-    $form.innerHTML = ``;
+  $form.innerHTML = `
+     <label for="number">Add a number</label>
+    <input name="number" id="number" type="text" placeholder="Enter number">
+    <button type="submit" data-action="add">Add Number</button>
+    <button type="submit" data-action="sortOne">Sort 1</button>
+    <button type="submit" data-action="sortAll">Sort All</button>
+    `;
+
+  $form.addEventListener("submit", function (event) {
+    // prevent the page from refreshing:
+    event.preventDefault();
+
+    const action = event.submitter.dataset.action;
+    const formData = new FormData($form);
+    const inputNumber = parseInt(formData.get("number"));
+
+    if (action === "add" && !isNaN(inputNumber)) {
+      addNumber(inputNumber);
+      $form.reset();
+    } else if (action === "sortOne") {
+      sortOne();
+    } else if (action === "sortAll") {
+      sortAll();
+    }
+  });
+  return $form;
 }
 
+function NumberGroup(label, items) {
+  const $section = document.createElement("section");
+  $section.innerHTML = `
+  <h2>${label}</h2>
+  <ul></ul>`;
 
+  const $ul = $section.querySelector("ul");
 
+  items.forEach((num) => {
+    const $li = document.createElement("li");
+    $li.textContent = num;
+    $ul.appendChild($li);
+  });
+  return $section;
+}
 
+// call functions:
+NumberForm();
+NumberGroup(); 
 
 
 
