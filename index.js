@@ -89,10 +89,25 @@ function NumberGroup(label, items) {
   return $section;
 }
 
-// call functions:
-NumberForm();
-NumberGroup(); 
-
-
-
 // ------------ RENDER --------------
+
+function render() {
+  const $app = document.querySelector("#app");
+  $app.innerHTML = `
+      <h1>Odd and Even Sorter</h1>
+      <NumberForm></NumberForm>
+      <NumberGroup id="bank"></NumberGroup>
+      <NumberGroup id="odds"></NumberGroup>
+      <NumberGroup id="evens"></NumberGroup>
+    `;
+
+  $app.querySelector("NumberForm").replaceWith(NumberForm());
+  $app.querySelector("NumberGroup#bank").replaceWith(NumberGroup("Bank", bank));
+  $app.querySelector("NumberGroup#odds").replaceWith(NumberGroup("Odds", odds));
+  $app
+    .querySelector("NumberGroup#evens")
+    .replaceWith(NumberGroup("Evens", evens));
+}
+
+// Initial render
+render();
